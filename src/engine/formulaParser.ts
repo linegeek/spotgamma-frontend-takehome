@@ -163,3 +163,32 @@ class Parser {
     return this.tokens.length;
   }
 }
+
+export function extractDeps(formula: string): CellId[] {
+  const tokens = tokenize(formula);
+  const deps: CellId[] = [];
+  let i = 0;
+  while (i < tokens.length) {
+    const t = tokens[i];
+    if (t.type === 'SUM' && tokens[i + 1]?.type === 'LPAREN') {
+      const start = tokens[i + 2];
+      const end   = tokens[i + 4];
+      if (start?.type === 'CELL_REF' && end?.type === 'CELL_REF') {
+        deps.push(...expandRange(start.value as CellId, end.value as CellId));
+        i += 5;
+        continue;
+      }
+    }
+    if (t.type === 'CELL_REF') deps.push(t.value as CellId);
+    i++;
+  }
+  return [...new Set(deps)];
+}
+
+export function parseFormula(formula: string): (cells: Record<CellId, number>) => number {
+  const tokens = tokenize(formula);
+  const parser = new Parser(tokens);
+  const fn = parser.parseExpr();
+  if (parser.currentPos !== parser.totalTokens) throw new Error('PARSE_ERROR');
+  return fn;
+}
