@@ -1,3 +1,4 @@
+import React from 'react';
 import { COLUMNS, ROWS } from '../../constants/grid';
 import { ColumnHeader } from './ColumnHeader';
 import { RowHeader } from './RowHeader';
@@ -17,12 +18,12 @@ export function SpreadsheetGrid() {
 
       {/* rows: row header + 10 cells */}
       {ROWS.map((row) => (
-        <>
-          <RowHeader key={`row-${row}`} label={row} />
+        <React.Fragment key={row}>
+          <RowHeader label={row} />
           {COLUMNS.map((col) => (
             <Cell key={`${col}${row}`} cellId={`${col}${row}`} />
           ))}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
