@@ -25,7 +25,10 @@ export function Cell({ cellId }: Props) {
   function startEdit() {
     setDraft(cell.raw);
     dispatch({ type: 'SET_EDITING_CELL', cellId });
-    setTimeout(() => inputRef.current?.focus(), 0);
+    setTimeout(() => {
+      inputRef.current?.focus();
+      inputRef.current?.select();
+    }, 0);
   }
 
   function commit() {
