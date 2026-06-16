@@ -5,8 +5,10 @@ function resolveNumeric(cellId: CellId, cells: CellStore): number {
   const cell = cells[cellId];
   if (!cell || cell.error) throw new Error('REF_ERROR');
   const v = cell.computed;
+  if (v === null) return 0;
   if (typeof v === 'number') return v;
   if (typeof v === 'string') {
+    if (v === '') return 0;
     const n = Number(v);
     if (!isNaN(n)) return n;
     throw new Error('VALUE_ERROR');
