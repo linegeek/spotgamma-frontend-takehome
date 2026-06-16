@@ -1,10 +1,9 @@
 .grid {
   display: grid;
-  grid-template-columns: 48px repeat(10, 1fr);
+  grid-template-columns: 48px repeat(10, 80px);
   grid-template-rows: 32px repeat(10, 40px);
   border-top: 1px solid #d0d0d0;
   border-left: 1px solid #d0d0d0;
-  width: fit-content;
 }
 
 .corner {

@@ -54,6 +54,7 @@ export function Cell({ cellId }: Props) {
       ref={inputRef}
       className={`${styles.cell} ${styles.editing}`}
       value={draft}
+      size={1}
       onChange={(e) => setDraft(e.target.value)}
       onBlur={commit}
       onKeyDown={handleKeyDown}
